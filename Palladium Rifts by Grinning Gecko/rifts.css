@@ -591,12 +591,12 @@ a {
 .charsheet main#megaverse .skills .heading {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 2.5rem 1fr 10rem 5rem 5rem 5rem 5rem 4rem 4rem;
+  grid-template-columns: 2.5rem 1fr 10rem 5rem 5rem 5rem 5rem 5rem 4rem 4rem;
 }
 .charsheet main#megaverse .skills .values {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 2.5rem 1fr 10rem 5rem 5rem 5rem 5rem 4rem 4rem;
+  grid-template-columns: 2.5rem 1fr 10rem 5rem 5rem 5rem 5rem 5rem 4rem 4rem;
 }
 .charsheet main#megaverse .armor-damage label {
   display: inline;

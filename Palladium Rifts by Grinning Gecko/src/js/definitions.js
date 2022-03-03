@@ -1505,6 +1505,7 @@ const SKILL_KEYS = [
   "base",
   "bonus",
   "perlevel",
+  "levelacquired",
   "level",
   "total",
   "description",
