@@ -568,7 +568,8 @@
           <input type="number" value="0" name="attr_perlevel" />
           <input type="number" value="0" name="attr_bonus" />
           <input type="number" value="1" name="attr_levelacquired" />
-          <input type="number" value="1" name="attr_level" />
+          <span class="readonly" name="attr_level"></span>
+          <input type="hidden" value="1" name="attr_level" />
           <input type="hidden" value="0" name="attr_total" />
           <span class="readonly" name="attr_total"></span>
           <button
@@ -12850,10 +12851,13 @@ async function updateSkill(rowId) {
   const row = `repeating_skills_${rowId}`;
   const keys = SKILL_KEYS.map((key) => `${row}_${key}`).concat([
     "default_profile",
+    "character_level",
   ]);
   console.log("keys", keys);
   const a = await getAttrsAsync(keys);
   console.log(a);
+
+  const level = +a["character_level"] - +a[`${row}_levelacquired`] + 1;
 
   const iqBonusKey = `repeating_profiles_${a["default_profile"]}_mod_iq_bonus`;
   const skillBonusKey = `repeating_profiles_${a["default_profile"]}_mod_skillbonus`;
@@ -12865,11 +12869,11 @@ async function updateSkill(rowId) {
   const total =
     +a[`${row}_base`] +
     +a[`${row}_bonus`] +
-    (+a[`${row}_level`] - 1) * +a[`${row}_perlevel`] +
+    (level - 1) * +a[`${row}_perlevel`] +
     (+profileBonuses[iqBonusKey] || 0) +
     (+profileBonuses[skillBonusKey] || 0);
   console.log("total", total);
-  await setAttrsAsync({ [`${row}_total`]: total });
+  await setAttrsAsync({ [`${row}_total`]: total, [`${row}_level`]: level });
 }
 
 async function updateSkillsOld() {
@@ -12914,7 +12918,25 @@ async function updateSkills() {
   await setAttrsAsync(totals);
 }
 
-async function updateSkillLevels(newCharacterLevel, oldCharacterLevel) {
+async function updateSkillLevels() {
+  const ids = await getSectionIDsAsync("skills");
+  const attrKeys = ids
+    .reduce((keys, id) => {
+      keys.push(`repeating_skills_${id}_level`);
+      keys.push(`repeating_skills_${id}_levelacquired`);
+      return keys;
+    }, [])
+    .concat(["character_level"]);
+  const a = await getAttrsAsync(attrKeys);
+  const attrs = {};
+  ids.forEach((id) => {
+    attrs[`repeating_skills_${id}_level`] =
+      +a[`character_level`] - +a[`repeating_skills_${id}_levelacquired`] + 1;
+  });
+  await setAttrsAsync(attrs);
+}
+
+async function updateSkillLevelsOld(newCharacterLevel, oldCharacterLevel) {
   const delta = newCharacterLevel - oldCharacterLevel;
   const ids = await getSectionIDsAsync("skills");
   const attrNames = ids.map((id) => `repeating_skills_${id}_level`);
