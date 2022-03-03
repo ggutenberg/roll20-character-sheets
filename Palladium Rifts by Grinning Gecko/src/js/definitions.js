@@ -857,6 +857,7 @@ const H2H = {
 
 const H2H_KEYS = [
   "name",
+  "levelacquired",
   "level",
   "attacks",
   "pull",

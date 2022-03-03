@@ -188,8 +188,13 @@
                   <input type="text" list="hand-to-hand" name="attr_name" />
                 </label>
                 <label
+                  ><span>Level Acquired</span>
+                  <input type="number" value="1" name="attr_levelacquired" />
+                </label>
+                <label
                   ><span>Level</span>
-                  <input type="number" value="1" name="attr_level" />
+                  <span class="readonly" name="attr_level"></span>
+                  <input type="hidden" value="1" name="attr_level" />
                 </label>
               </div>
             </summary>
@@ -891,10 +896,10 @@
       e.previousValue = "1";
     }
     // Update WPs
-    await updateHandToHands("h2h", e.newValue);
+    await updateHandToHands("h2h");
     await updateWeaponProficiencies("wp", e.newValue, e.previousValue);
     await updateWeaponProficiencies("wpmodern", e.newValue, e.previousValue);
-    await updateSkillLevels(+e.newValue, +e.previousValue);
+    await updateSkillLevels();
     await updateMagicPsionicsLevels();
   });
 </script>

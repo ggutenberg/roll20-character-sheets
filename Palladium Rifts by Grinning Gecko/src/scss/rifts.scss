@@ -425,10 +425,14 @@ a {
     .bonus-thing-heading {
       display: grid;
       gap: 1rem;
-      grid-template-columns: 2.5rem 1fr min-content;
+      grid-template-columns: 2.5rem 1fr min-content min-content;
       // Accommodate caret
       // float: right;
       // width: 95%;
+
+      span.readonly {
+        @include readonly;
+      }
 
       label {
         align-items: center;
@@ -444,7 +448,10 @@ a {
         input[name="attr_name"] {
           width: auto;
         }
-        input[name="attr_level"] {
+        input[name="attr_levelacquired"] {
+          width: 5rem;
+        }
+        span[name="attr_level"] {
           width: 5rem;
         }
       }

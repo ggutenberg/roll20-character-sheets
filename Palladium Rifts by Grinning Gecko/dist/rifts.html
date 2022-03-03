@@ -736,8 +736,13 @@
                   <input type="text" list="hand-to-hand" name="attr_name" />
                 </label>
                 <label
+                  ><span>Level Acquired</span>
+                  <input type="number" value="1" name="attr_levelacquired" />
+                </label>
+                <label
                   ><span>Level</span>
-                  <input type="number" value="1" name="attr_level" />
+                  <span class="readonly" name="attr_level"></span>
+                  <input type="hidden" value="1" name="attr_level" />
                 </label>
               </div>
             </summary>
@@ -9960,6 +9965,7 @@ const H2H = {
 
 const H2H_KEYS = [
   "name",
+  "levelacquired",
   "level",
   "attacks",
   "pull",
@@ -11764,24 +11770,35 @@ on("change:repeating_profiles:mod_pb", async (e) => {
   /* endinject */
 
   /* inject:js/combat_skills.js */
-  async function updateHandToHands(section, newCharacterLevel) {
+  async function updateHandToHands(section) {
   const ids = await getSectionIDsAsync(section);
-  const attrNames = ids.map((id) => `repeating_${section}_${id}_name`);
-  const a = await getAttrsAsync(attrNames);
+  const attrKeys = ids
+    .reduce((keys, id) => {
+      return keys.concat([
+        `repeating_${section}_${id}_name`,
+        `repeating_${section}_${id}_level`,
+        `repeating_${section}_${id}_levelacquired`,
+      ]);
+    }, [])
+    .concat(["character_level"]);
+
+  // const attrNames = ids.map((id) => `repeating_${section}_${id}_name`);
+  const a = await getAttrsAsync(attrKeys);
   for (rowId of ids) {
     const rowPrefix = `repeating_${section}_${rowId}`;
+    const level = +a[`character_level`] - +a[`${rowPrefix}_levelacquired`] + 1;
     await calculateH2h(
       section,
       rowId,
       rowPrefix,
       a[`${rowPrefix}_name`],
-      newCharacterLevel
+      level
     );
   }
 }
 
 async function calculateH2h(section, rowId, keyPrefix, name, level) {
-  console.log("calculateH2h", name, keyPrefix, level);
+  console.log("calculateH2h", section, rowId, keyPrefix, name, level);
   const lowerCaseName = name.toLowerCase();
   if (!Object.keys(H2H).includes(lowerCaseName)) {
     // Exit if this isn't one of the pre-defined skills
@@ -13629,10 +13646,10 @@ on("clicked:migrate", async (e) => {
       e.previousValue = "1";
     }
     // Update WPs
-    await updateHandToHands("h2h", e.newValue);
+    await updateHandToHands("h2h");
     await updateWeaponProficiencies("wp", e.newValue, e.previousValue);
     await updateWeaponProficiencies("wpmodern", e.newValue, e.previousValue);
-    await updateSkillLevels(+e.newValue, +e.previousValue);
+    await updateSkillLevels();
     await updateMagicPsionicsLevels();
   });
 </script>

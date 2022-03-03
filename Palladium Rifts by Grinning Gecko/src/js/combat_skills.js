@@ -1,21 +1,32 @@
-async function updateHandToHands(section, newCharacterLevel) {
+async function updateHandToHands(section) {
   const ids = await getSectionIDsAsync(section);
-  const attrNames = ids.map((id) => `repeating_${section}_${id}_name`);
-  const a = await getAttrsAsync(attrNames);
+  const attrKeys = ids
+    .reduce((keys, id) => {
+      return keys.concat([
+        `repeating_${section}_${id}_name`,
+        `repeating_${section}_${id}_level`,
+        `repeating_${section}_${id}_levelacquired`,
+      ]);
+    }, [])
+    .concat(["character_level"]);
+
+  // const attrNames = ids.map((id) => `repeating_${section}_${id}_name`);
+  const a = await getAttrsAsync(attrKeys);
   for (rowId of ids) {
     const rowPrefix = `repeating_${section}_${rowId}`;
+    const level = +a[`character_level`] - +a[`${rowPrefix}_levelacquired`] + 1;
     await calculateH2h(
       section,
       rowId,
       rowPrefix,
       a[`${rowPrefix}_name`],
-      newCharacterLevel
+      level
     );
   }
 }
 
 async function calculateH2h(section, rowId, keyPrefix, name, level) {
-  console.log("calculateH2h", name, keyPrefix, level);
+  console.log("calculateH2h", section, rowId, keyPrefix, name, level);
   const lowerCaseName = name.toLowerCase();
   if (!Object.keys(H2H).includes(lowerCaseName)) {
     // Exit if this isn't one of the pre-defined skills
