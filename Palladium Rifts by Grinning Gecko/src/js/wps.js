@@ -119,7 +119,9 @@ on("change:repeating_wp:name change:repeating_wpmodern:name", async (e) => {
   const [r, section, rowId, attr] = e.sourceAttribute.split("_");
   const wpName = e.newValue.toLowerCase();
   const wpLevelKey = `${r}_${section}_${rowId}_level`;
+  const wpLevelAcquiredKey = `${r}_${section}_${rowId}_level`;
   setAttrs({ [`${r}_${section}_${rowId}_rowid`]: `${r}_${section}_${rowId}` });
+
   const a = await getAttrsAsync(["character_level", wpLevelKey]);
   if (Boolean(a[wpLevelKey]) && +a[wpLevelKey] != 0) {
     await setWp({ section, wpName, rowId, newWpLevel: a[wpLevelKey] });

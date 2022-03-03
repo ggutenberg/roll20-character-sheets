@@ -126,25 +126,26 @@ async function updateSkillLevelsOld(newCharacterLevel, oldCharacterLevel) {
 
 on("change:repeating_skills", async (e) => {
   console.log("change:repeating_skills", e);
+  const sourceParts = e.sourceAttribute.split("_");
+
+  const isNew = await isNewRow(e);
+  if (isNew) {
+    await setRowDefaults(e, { silent: true });
+  }
+
+  // Exit if the sheetworker was doing something other than increasing the level.
   if (e.sourceType === "sheetworker" && !e.sourceAttribute.endsWith("_level")) {
     return;
   }
-  if (e.sourceAttribute.endsWith("_name")) return;
-  const sourceParts = e.sourceAttribute.split("_");
-  // Return if no attribute is changed and it's the row itself
-  if (sourceParts.length < 4) return;
+  // Exit if only the name was changed.
+  if (!isNew && e.sourceAttribute.endsWith("_name")) {
+    return;
+  }
+  // Exit if no attribute was changed and it's the row itself.
+  if (sourceParts.length < 4) {
+    return;
+  }
+
   const [r, section, rowId] = sourceParts;
   await updateSkill(rowId);
-});
-
-on("change:repeating_skills:name", async (e) => {
-  const [r, section, rowId, attr] = e.sourceAttribute.split("_");
-  const a = await getAttrsAsync(["character_level"]);
-  console.log(a);
-  const attrs = {
-    [`${r}_${section}_${rowId}_level`]: a.character_level,
-    [`${r}_${section}_${rowId}_rowid`]: `repeating_${section}_${rowId}`,
-  };
-  console.log(attrs);
-  await setAttrsAsync(attrs);
 });

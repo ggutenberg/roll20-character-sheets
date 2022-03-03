@@ -549,6 +549,7 @@
     <h5></h5>
   </div>
   <fieldset class="repeating_skills">
+    <input type="hidden" name="attr_new" value="1" />
     <details class="info">
       <summary>
         <div class="values">
@@ -1465,6 +1466,7 @@
     <h5>Throw</h5>
     <h5>Entangle</h5>
     <h5 title="Rate of Fire">RoF</h5>
+    <h5>Level Acquired</h5>
     <h5>Level</h5>
     <h5>Row ID</h5>
     <input type="hidden" name="attr_bonus_id" value="" />
@@ -1475,6 +1477,7 @@
     <input type="number" value="0" name="attr_throw" />
     <input type="number" value="0" name="attr_entangle" />
     <input type="number" value="0" name="attr_rof" title="Rate of Fire" />
+    <input type="number" value="0" name="attr_levelacquired" />
     <input type="number" value="0" name="attr_level" />
     <input type="string" value="" name="attr_rowid" readonly />
   </fieldset>
@@ -1484,12 +1487,14 @@
     <h5>Weapon Proficiency</h5>
     <h5>Single</h5>
     <h5>Burst</h5>
+    <h5>Level Acquired</h5>
     <h5>Level</h5>
     <h5>Row ID</h5>
     <input type="hidden" name="attr_bonus_id" value="" />
     <input type="text" list="weapon-proficiencies-modern" name="attr_name" />
     <input type="number" value="0" name="attr_strike_range_single" />
     <input type="number" value="0" name="attr_strike_range_burst" />
+    <input type="number" value="0" name="attr_levelacquired" />
     <input type="number" value="0" name="attr_level" />
     <input type="text" value="" name="attr_rowid" readonly />
   </fieldset>
@@ -10451,6 +10456,7 @@ const WP = {
 const WP_KEYS = {
   wp: [
     "name",
+    "levelacquired",
     "level",
     "strike",
     "parry",
@@ -10461,6 +10467,7 @@ const WP_KEYS = {
   ],
   wpmodern: [
     "name",
+    "levelacquired",
     "level",
     "strike_range_single",
     "disarm",
@@ -11108,6 +11115,44 @@ async function palladiumAddToTurnTracker(initKey, attacksKey) {
   // https://app.roll20.net/forum/post/6817409/multiple-initiative-values-for-a-single-character/?pageforid=6817748#post-6817748
   const dupeTracker = await startRoll(`!dup-turn ${attacks}`);
   finishRoll(dupeTracker.rollId);
+}
+
+/**
+ * Determines if a repeating section change event is a new row.
+ * Requires the repeating section to have a `rowid` attribute.
+ * Note that when a new row is added the
+ *
+ * @param {*} e Roll20 change event object.
+ * @returns bool
+ */
+async function isNewRow(e) {
+  const [r, section, rowId, attr] = e.sourceAttribute.split("_");
+  const rowPrefix = `${r}_${section}_${rowId}`;
+  const a = await getAttrsAsync([`${rowPrefix}_rowid`]);
+  if (a[`${rowPrefix}_rowid`].length === 0) {
+    await setAttrsAsync(
+      { [`${rowPrefix}_rowid`]: `${r}_${section}_${rowId}` },
+      { silent: true }
+    );
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Sets generic defaults when a new row is created.
+ *
+ * @param {*} e Roll20 change event object.
+ */
+async function setRowDefaults(e, setAttrsOptions) {
+  const [r, section, rowId, attr] = e.sourceAttribute.split("_");
+  const rowPrefix = `${r}_${section}_${rowId}`;
+  const a = await getAttrsAsync(["character_level"]);
+  const attrs = {
+    [`${rowPrefix}_levelacquired`]: a["character_level"],
+    [`${rowPrefix}_level`]: 1,
+  };
+  await setAttrsAsync(attrs, setAttrsOptions);
 }
 
   /* endinject */
@@ -11972,7 +12017,9 @@ on("change:repeating_wp:name change:repeating_wpmodern:name", async (e) => {
   const [r, section, rowId, attr] = e.sourceAttribute.split("_");
   const wpName = e.newValue.toLowerCase();
   const wpLevelKey = `${r}_${section}_${rowId}_level`;
+  const wpLevelAcquiredKey = `${r}_${section}_${rowId}_level`;
   setAttrs({ [`${r}_${section}_${rowId}_rowid`]: `${r}_${section}_${rowId}` });
+
   const a = await getAttrsAsync(["character_level", wpLevelKey]);
   if (Boolean(a[wpLevelKey]) && +a[wpLevelKey] != 0) {
     await setWp({ section, wpName, rowId, newWpLevel: a[wpLevelKey] });
@@ -12968,27 +13015,28 @@ async function updateSkillLevelsOld(newCharacterLevel, oldCharacterLevel) {
 
 on("change:repeating_skills", async (e) => {
   console.log("change:repeating_skills", e);
+  const sourceParts = e.sourceAttribute.split("_");
+
+  const isNew = await isNewRow(e);
+  if (isNew) {
+    await setRowDefaults(e, { silent: true });
+  }
+
+  // Exit if the sheetworker was doing something other than increasing the level.
   if (e.sourceType === "sheetworker" && !e.sourceAttribute.endsWith("_level")) {
     return;
   }
-  if (e.sourceAttribute.endsWith("_name")) return;
-  const sourceParts = e.sourceAttribute.split("_");
-  // Return if no attribute is changed and it's the row itself
-  if (sourceParts.length < 4) return;
+  // Exit if only the name was changed.
+  if (!isNew && e.sourceAttribute.endsWith("_name")) {
+    return;
+  }
+  // Exit if no attribute was changed and it's the row itself.
+  if (sourceParts.length < 4) {
+    return;
+  }
+
   const [r, section, rowId] = sourceParts;
   await updateSkill(rowId);
-});
-
-on("change:repeating_skills:name", async (e) => {
-  const [r, section, rowId, attr] = e.sourceAttribute.split("_");
-  const a = await getAttrsAsync(["character_level"]);
-  console.log(a);
-  const attrs = {
-    [`${r}_${section}_${rowId}_level`]: a.character_level,
-    [`${r}_${section}_${rowId}_rowid`]: `repeating_${section}_${rowId}`,
-  };
-  console.log(attrs);
-  await setAttrsAsync(attrs);
 });
 
   /* endinject */

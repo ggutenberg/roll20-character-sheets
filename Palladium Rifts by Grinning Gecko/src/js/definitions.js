@@ -1343,6 +1343,7 @@ const WP = {
 const WP_KEYS = {
   wp: [
     "name",
+    "levelacquired",
     "level",
     "strike",
     "parry",
@@ -1353,6 +1354,7 @@ const WP_KEYS = {
   ],
   wpmodern: [
     "name",
+    "levelacquired",
     "level",
     "strike_range_single",
     "disarm",
