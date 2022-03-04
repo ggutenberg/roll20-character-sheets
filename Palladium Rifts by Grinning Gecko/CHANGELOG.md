@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0] - ??
+
+### Changed
+
+- Fix for a change in dark mode.
+- Fixed Migrate button.
+
 ## [1.4.0] - 2022-03-02
 
 ### Added

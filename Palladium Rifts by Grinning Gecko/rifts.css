@@ -961,6 +961,9 @@ img.logo {
 body.sheet-darkmode {
   color: var(--dark-secondarytext);
 }
+body.sheet-darkmode .sheetform {
+  background-color: #343434;
+}
 body.sheet-darkmode h1,
 body.sheet-darkmode h2,
 body.sheet-darkmode h3,

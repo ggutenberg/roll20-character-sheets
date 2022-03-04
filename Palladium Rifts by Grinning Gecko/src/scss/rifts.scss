@@ -1077,6 +1077,10 @@ img.logo {
 body.sheet-darkmode {
   color: var(--dark-secondarytext);
 
+  .sheetform {
+    background-color: #343434;
+  }
+
   h1,
   h2,
   h3,
