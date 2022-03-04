@@ -351,5 +351,6 @@ async function setRowDefaults(e, setAttrsOptions) {
     [`${rowPrefix}_levelacquired`]: a["character_level"],
     [`${rowPrefix}_level`]: 1,
   };
+  console.log(attrs);
   await setAttrsAsync(attrs, setAttrsOptions);
 }

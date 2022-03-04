@@ -650,6 +650,28 @@ a {
       }
     }
 
+    .wp-container {
+      .heading,
+      .values {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .wp {
+        .heading,
+        .values {
+          grid-template-columns: 20rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 1fr;
+        }
+      }
+
+      .wpmodern {
+        .heading,
+        .values {
+          grid-template-columns: 20rem 5rem 5rem 5rem 5rem 1fr;
+        }
+      }
+    }
+
     .armor-damage {
       label {
         display: inline;

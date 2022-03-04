@@ -612,6 +612,19 @@ a {
   gap: 0.5rem;
   grid-template-columns: 2.5rem 1fr 10rem 5rem 5rem 5rem 5rem 5rem 4rem 4rem;
 }
+.charsheet main#megaverse .wp-container .heading,
+.charsheet main#megaverse .wp-container .values {
+  display: grid;
+  gap: 0.5rem;
+}
+.charsheet main#megaverse .wp-container .wp .heading,
+.charsheet main#megaverse .wp-container .wp .values {
+  grid-template-columns: 20rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 1fr;
+}
+.charsheet main#megaverse .wp-container .wpmodern .heading,
+.charsheet main#megaverse .wp-container .wpmodern .values {
+  grid-template-columns: 20rem 5rem 5rem 5rem 5rem 1fr;
+}
 .charsheet main#megaverse .armor-damage label {
   display: inline;
 }
