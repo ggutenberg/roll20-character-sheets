@@ -86,3 +86,9 @@ on("change:repeating_h2h", async (e) => {
     await addModifierToBonusesAsync(section, rowId);
   }
 });
+
+on("remove:repeating_h2h", async (e) => {
+  console.log("remove h2h", e);
+  const bonusRowId = e.removedInfo[`${e.sourceAttribute}_bonus_id`];
+  await removeBonusRowsAsync(bonusRowId);
+});
