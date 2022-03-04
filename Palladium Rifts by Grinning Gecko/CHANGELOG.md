@@ -2,6 +2,10 @@
 
 ## [1.5.0] - ??
 
+### Added
+
+- `Level Acquired` for Skills, Hand to Hand, and Weapon Proficiencies. Current level calculation is done based on that value and the current character level.
+
 ### Changed
 
 - Fix for a change in dark mode.
