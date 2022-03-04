@@ -1,27 +1,3 @@
-async function updateSkillOld(rowId, iqBonusKey = "iq_bonus") {
-  const additionalModifiers = [iqBonusKey];
-
-  const profileMeta = await getAttrsAsync(["default_profile"]);
-  let profileSkillBonusKey = "";
-  if (profileMeta["default_profile"]) {
-    profileSkillBonusKey = `repeating_profiles_${profileMeta["default_profile"]}_mod_skillbonus`;
-    additionalModifiers.push(profileSkillBonusKey);
-  }
-
-  const row = `repeating_skills_${rowId}`;
-  const skillAttrs = SKILL_KEYS.map((key) => `${row}_${key}`);
-  const a = await getAttrsAsync(skillAttrs.concat(additionalModifiers));
-  const attrs = {};
-  const total =
-    +a[`${row}_base`] +
-    +a[iqBonusKey] +
-    (+a[profileSkillBonusKey] || 0) +
-    +a[`${row}_bonus`] +
-    (+a[`${row}_level`] - 1) * +a[`${row}_perlevel`];
-  attrs[`${row}_total`] = total;
-  await setAttrsAsync(attrs);
-}
-
 async function updateSkill(rowId) {
   const row = `repeating_skills_${rowId}`;
   const keys = SKILL_KEYS.map((key) => `${row}_${key}`).concat([
@@ -49,13 +25,6 @@ async function updateSkill(rowId) {
     (+profileBonuses[skillBonusKey] || 0);
   console.log("total", total);
   await setAttrsAsync({ [`${row}_total`]: total, [`${row}_level`]: level });
-}
-
-async function updateSkillsOld() {
-  const ids = await getSectionIDsAsync("skills");
-  for (const id of ids) {
-    await updateSkill(id);
-  }
 }
 
 async function updateSkills() {
@@ -111,22 +80,10 @@ async function updateSkillLevels() {
   await setAttrsAsync(attrs);
 }
 
-async function updateSkillLevelsOld(newCharacterLevel, oldCharacterLevel) {
-  const delta = newCharacterLevel - oldCharacterLevel;
-  const ids = await getSectionIDsAsync("skills");
-  const attrNames = ids.map((id) => `repeating_skills_${id}_level`);
-  const a = await getAttrsAsync(attrNames);
-  const attrs = {};
-  ids.forEach((id) => {
-    attrs[`repeating_skills_${id}_level`] =
-      +a[`repeating_skills_${id}_level`] + delta;
-  });
-  await setAttrsAsync(attrs);
-}
-
 on("change:repeating_skills", async (e) => {
   console.log("change:repeating_skills", e);
   const sourceParts = e.sourceAttribute.split("_");
+  const [r, section, rowId] = sourceParts;
 
   const isNew = await isNewRow(e);
   if (isNew) {
@@ -146,6 +103,5 @@ on("change:repeating_skills", async (e) => {
     return;
   }
 
-  const [r, section, rowId] = sourceParts;
   await updateSkill(rowId);
 });

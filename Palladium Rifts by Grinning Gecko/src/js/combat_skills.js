@@ -19,15 +19,14 @@ async function updateHandToHands(section) {
       section,
       rowId,
       rowPrefix,
-      a[`${rowPrefix}_name`],
+      a[`${rowPrefix}_name`].toLowerCase(),
       level
     );
   }
 }
 
-async function calculateH2h(section, rowId, keyPrefix, name, level) {
-  console.log("calculateH2h", section, rowId, keyPrefix, name, level);
-  const lowerCaseName = name.toLowerCase();
+async function calculateH2h(section, rowId, keyPrefix, lowerCaseName, level) {
+  console.log("calculateH2h", section, rowId, keyPrefix, lowerCaseName, level);
   if (!Object.keys(H2H).includes(lowerCaseName)) {
     // Exit if this isn't one of the pre-defined skills
     return;
@@ -46,32 +45,44 @@ async function calculateH2h(section, rowId, keyPrefix, name, level) {
 }
 
 on("change:repeating_h2h", async (e) => {
-  /**
-   * Allow custom Hand to Hand
-   */
-  if (e.sourceType === "sheetworker") {
-    return;
-  }
-
-  const [r, section, rowId] = e.sourceAttribute.split("_");
-  const rowPrefix = `repeating_${section}_${rowId}`;
-  const { [`${rowPrefix}_name`]: h2hName } = await getAttrsAsync([
-    `${rowPrefix}_name`,
-  ]);
-  const lowerCaseName = h2hName.toLowerCase();
-  if (Object.keys(H2H).includes(lowerCaseName)) {
-    return;
-  }
-
   console.log("change:repeating_h2h", e);
-  await addModifierToBonusesAsync(section, rowId);
-});
+  const sourceParts = e.sourceAttribute.split("_");
+  const [r, section, rowId] = sourceParts;
+  const rowPrefix = `${r}_${section}_${rowId}`;
 
-on("change:repeating_h2h:name change:repeating_h2h:level", async (e) => {
-  console.log("change:repeating_h2h:name change:repeating_h2h:level", e);
-  const [r, section, rowId] = e.sourceAttribute.split("_");
-  const rowPrefix = `repeating_${section}_${rowId}`;
-  const { [`${rowPrefix}_level`]: level, [`${rowPrefix}_name`]: h2hName } =
-    await getAttrsAsync([`${rowPrefix}_level`, `${rowPrefix}_name`]);
-  await calculateH2h(section, rowId, rowPrefix, h2hName, +level);
+  const isNew = await isNewRow(e);
+  if (isNew) {
+    await setRowDefaults(e, { silent: true });
+  }
+
+  // Exit if the sheetworker was doing something other than increasing the level.
+  if (e.sourceType === "sheetworker" && !e.sourceAttribute.endsWith("_level")) {
+    return;
+  }
+  // Exit if only the name was changed.
+  if (!isNew && e.sourceAttribute.endsWith("_name")) {
+    return;
+  }
+  // Exit if no attribute was changed and it's the row itself.
+  if (sourceParts.length < 4) {
+    return;
+  }
+
+  const attrKeys = [
+    `${rowPrefix}_name`,
+    `${rowPrefix}_levelacquired`,
+    `character_level`,
+  ];
+  const a = await getAttrsAsync(attrKeys);
+  const level = +a[`character_level`] - +a[`${rowPrefix}_levelacquired`] + 1;
+  await setAttrsAsync({ [`${rowPrefix}_level`]: level });
+
+  const lowerCaseName = a[`${rowPrefix}_name`].toLowerCase();
+  if (Object.keys(H2H).includes(lowerCaseName)) {
+    // H2H is defined.
+    await calculateH2h(section, rowId, rowPrefix, lowerCaseName, level);
+  } else {
+    // H2H is custom.
+    await addModifierToBonusesAsync(section, rowId);
+  }
 });

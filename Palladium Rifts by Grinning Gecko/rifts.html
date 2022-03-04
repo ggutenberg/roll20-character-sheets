@@ -11836,15 +11836,14 @@ on("change:repeating_profiles:mod_pb", async (e) => {
       section,
       rowId,
       rowPrefix,
-      a[`${rowPrefix}_name`],
+      a[`${rowPrefix}_name`].toLowerCase(),
       level
     );
   }
 }
 
-async function calculateH2h(section, rowId, keyPrefix, name, level) {
-  console.log("calculateH2h", section, rowId, keyPrefix, name, level);
-  const lowerCaseName = name.toLowerCase();
+async function calculateH2h(section, rowId, keyPrefix, lowerCaseName, level) {
+  console.log("calculateH2h", section, rowId, keyPrefix, lowerCaseName, level);
   if (!Object.keys(H2H).includes(lowerCaseName)) {
     // Exit if this isn't one of the pre-defined skills
     return;
@@ -11863,34 +11862,46 @@ async function calculateH2h(section, rowId, keyPrefix, name, level) {
 }
 
 on("change:repeating_h2h", async (e) => {
-  /**
-   * Allow custom Hand to Hand
-   */
-  if (e.sourceType === "sheetworker") {
-    return;
-  }
-
-  const [r, section, rowId] = e.sourceAttribute.split("_");
-  const rowPrefix = `repeating_${section}_${rowId}`;
-  const { [`${rowPrefix}_name`]: h2hName } = await getAttrsAsync([
-    `${rowPrefix}_name`,
-  ]);
-  const lowerCaseName = h2hName.toLowerCase();
-  if (Object.keys(H2H).includes(lowerCaseName)) {
-    return;
-  }
-
   console.log("change:repeating_h2h", e);
-  await addModifierToBonusesAsync(section, rowId);
-});
+  const sourceParts = e.sourceAttribute.split("_");
+  const [r, section, rowId] = sourceParts;
+  const rowPrefix = `${r}_${section}_${rowId}`;
 
-on("change:repeating_h2h:name change:repeating_h2h:level", async (e) => {
-  console.log("change:repeating_h2h:name change:repeating_h2h:level", e);
-  const [r, section, rowId] = e.sourceAttribute.split("_");
-  const rowPrefix = `repeating_${section}_${rowId}`;
-  const { [`${rowPrefix}_level`]: level, [`${rowPrefix}_name`]: h2hName } =
-    await getAttrsAsync([`${rowPrefix}_level`, `${rowPrefix}_name`]);
-  await calculateH2h(section, rowId, rowPrefix, h2hName, +level);
+  const isNew = await isNewRow(e);
+  if (isNew) {
+    await setRowDefaults(e, { silent: true });
+  }
+
+  // Exit if the sheetworker was doing something other than increasing the level.
+  if (e.sourceType === "sheetworker" && !e.sourceAttribute.endsWith("_level")) {
+    return;
+  }
+  // Exit if only the name was changed.
+  if (!isNew && e.sourceAttribute.endsWith("_name")) {
+    return;
+  }
+  // Exit if no attribute was changed and it's the row itself.
+  if (sourceParts.length < 4) {
+    return;
+  }
+
+  const attrKeys = [
+    `${rowPrefix}_name`,
+    `${rowPrefix}_levelacquired`,
+    `character_level`,
+  ];
+  const a = await getAttrsAsync(attrKeys);
+  const level = +a[`character_level`] - +a[`${rowPrefix}_levelacquired`] + 1;
+  await setAttrsAsync({ [`${rowPrefix}_level`]: level });
+
+  const lowerCaseName = a[`${rowPrefix}_name`].toLowerCase();
+  if (Object.keys(H2H).includes(lowerCaseName)) {
+    // H2H is defined.
+    await calculateH2h(section, rowId, rowPrefix, lowerCaseName, level);
+  } else {
+    // H2H is custom.
+    await addModifierToBonusesAsync(section, rowId);
+  }
 });
 
   /* endinject */
@@ -12887,31 +12898,7 @@ on("change:spd", async (e) => {
   /* endinject */
 
   /* inject:js/skills.js */
-  async function updateSkillOld(rowId, iqBonusKey = "iq_bonus") {
-  const additionalModifiers = [iqBonusKey];
-
-  const profileMeta = await getAttrsAsync(["default_profile"]);
-  let profileSkillBonusKey = "";
-  if (profileMeta["default_profile"]) {
-    profileSkillBonusKey = `repeating_profiles_${profileMeta["default_profile"]}_mod_skillbonus`;
-    additionalModifiers.push(profileSkillBonusKey);
-  }
-
-  const row = `repeating_skills_${rowId}`;
-  const skillAttrs = SKILL_KEYS.map((key) => `${row}_${key}`);
-  const a = await getAttrsAsync(skillAttrs.concat(additionalModifiers));
-  const attrs = {};
-  const total =
-    +a[`${row}_base`] +
-    +a[iqBonusKey] +
-    (+a[profileSkillBonusKey] || 0) +
-    +a[`${row}_bonus`] +
-    (+a[`${row}_level`] - 1) * +a[`${row}_perlevel`];
-  attrs[`${row}_total`] = total;
-  await setAttrsAsync(attrs);
-}
-
-async function updateSkill(rowId) {
+  async function updateSkill(rowId) {
   const row = `repeating_skills_${rowId}`;
   const keys = SKILL_KEYS.map((key) => `${row}_${key}`).concat([
     "default_profile",
@@ -12938,13 +12925,6 @@ async function updateSkill(rowId) {
     (+profileBonuses[skillBonusKey] || 0);
   console.log("total", total);
   await setAttrsAsync({ [`${row}_total`]: total, [`${row}_level`]: level });
-}
-
-async function updateSkillsOld() {
-  const ids = await getSectionIDsAsync("skills");
-  for (const id of ids) {
-    await updateSkill(id);
-  }
 }
 
 async function updateSkills() {
@@ -13000,22 +12980,10 @@ async function updateSkillLevels() {
   await setAttrsAsync(attrs);
 }
 
-async function updateSkillLevelsOld(newCharacterLevel, oldCharacterLevel) {
-  const delta = newCharacterLevel - oldCharacterLevel;
-  const ids = await getSectionIDsAsync("skills");
-  const attrNames = ids.map((id) => `repeating_skills_${id}_level`);
-  const a = await getAttrsAsync(attrNames);
-  const attrs = {};
-  ids.forEach((id) => {
-    attrs[`repeating_skills_${id}_level`] =
-      +a[`repeating_skills_${id}_level`] + delta;
-  });
-  await setAttrsAsync(attrs);
-}
-
 on("change:repeating_skills", async (e) => {
   console.log("change:repeating_skills", e);
   const sourceParts = e.sourceAttribute.split("_");
+  const [r, section, rowId] = sourceParts;
 
   const isNew = await isNewRow(e);
   if (isNew) {
@@ -13035,7 +13003,6 @@ on("change:repeating_skills", async (e) => {
     return;
   }
 
-  const [r, section, rowId] = sourceParts;
   await updateSkill(rowId);
 });
 
