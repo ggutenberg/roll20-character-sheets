@@ -619,11 +619,11 @@ a {
 }
 .charsheet main#megaverse .wp-container .wp .heading,
 .charsheet main#megaverse .wp-container .wp .values {
-  grid-template-columns: 20rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 1fr;
+  grid-template-columns: minmax(16rem, 1fr) 5rem 5rem 5rem 5rem 5rem 5rem 5rem 5rem 1fr;
 }
 .charsheet main#megaverse .wp-container .wpmodern .heading,
 .charsheet main#megaverse .wp-container .wpmodern .values {
-  grid-template-columns: 20rem 5rem 5rem 5rem 5rem 1fr;
+  grid-template-columns: minmax(16rem, 1fr) 5rem 5rem 5rem 5rem 1fr;
 }
 .charsheet main#megaverse .armor-damage label {
   display: inline;
@@ -748,19 +748,19 @@ a {
 .charsheet main#megaverse .powersabilities .abilities-list {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 2.5rem 1fr 6rem 8rem 10rem 8rem 4rem 8rem 4rem 4rem;
+  grid-template-columns: 2.5rem minmax(16rem, 1fr) 6rem 8rem 10rem 8rem 4rem 8rem 4rem 4rem;
 }
 .charsheet main#megaverse .magic .heading,
 .charsheet main#megaverse .magic .spells-list {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 2.5rem 1fr 5rem 6rem 8rem 8rem 4rem 8rem 4rem 4rem 6rem 4rem;
+  grid-template-columns: 2.5rem minmax(16rem, 1fr) 5rem 6rem 8rem 8rem 4rem 8rem 4rem 4rem 6rem 4rem;
 }
 .charsheet main#megaverse .psionics .heading,
 .charsheet main#megaverse .psionics .psionics-list {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 2.5rem 1fr 6rem 8rem 8rem 4rem 8rem 4rem 4rem 5rem 4rem;
+  grid-template-columns: 2.5rem minmax(16rem, 1fr) 6rem 8rem 8rem 4rem 8rem 4rem 4rem 5rem 4rem;
 }
 .charsheet main#megaverse .active-container {
   padding: 0.5rem;
@@ -887,13 +887,13 @@ img.logo {
 .charsheet .wp-container .repcontainer[data-groupname=repeating_wp] .repitem {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 1fr 5rem 5rem 5rem 5rem 5rem 5rem 5rem 24rem;
+  grid-template-columns: 1fr;
 }
 
 .charsheet .wp-container .repcontainer[data-groupname=repeating_wpmodern] .repitem {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 1fr 5rem 5rem 5rem 29rem;
+  grid-template-columns: 1fr;
 }
 
 .charsheet .repeating-movement .repcontainer .repitem:not(:first-of-type) h5,

@@ -12,6 +12,7 @@
 - Fix `Migrate` button.
 - Fix issue where adding custom Weapon Proficiencies would break the process that runs when the Character Level is changed, and prevent Skills/Abilities/etc. from updating.
 - Fix issue where sometimes Skills/Weapon Proficiencies would auto-adjust their level when opening the sheet.
+- Improve alignment between headings and values in Weapon Proficiencies, Abilities, Magic, and Psionics.
 
 ## [1.4.0] - 2022-03-02
 
