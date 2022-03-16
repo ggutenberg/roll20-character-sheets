@@ -1502,7 +1502,25 @@ const SAVE_KEYS = Object.values(SAVE_KEYS_ATTRIBUTE_BONUSES).reduce(
   (acc, cur) => acc.concat(cur),
   []
 );
-const REPEATING_BONUS_KEYS = COMBAT_KEYS.concat(SAVE_KEYS, ATTRIBUTE_KEYS);
+const REPEATING_MOVEMENT_KEYS = [
+  "run_mph",
+  "run_kmh",
+  "fly_mph",
+  "fly_kmh",
+  "run_ft_melee",
+  "run_m_melee",
+  "fly_ft_melee",
+  "fly_m_melee",
+  "run_ft_action",
+  "run_m_action",
+  "fly_ft_action",
+  "fly_m_action",
+];
+const REPEATING_BONUS_KEYS = COMBAT_KEYS.concat(
+  SAVE_KEYS,
+  ATTRIBUTE_KEYS,
+  REPEATING_MOVEMENT_KEYS
+);
 const SKILL_KEYS = [
   "name",
   "category",
