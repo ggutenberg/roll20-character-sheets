@@ -9008,7 +9008,7 @@
       <span></span><span></span><span></span><span></span>
       Export
     </button>
-    <!-- <button type="action" name="act_test">Test</button> -->
+    <!-- <button class="test" type="action" name="act_test">Test</button> -->
     <label>Status: <span name="attr_importexportstatus"></span></label>
     <input type="hidden" name="attr_importexportstatus" />
     <textarea class="full tall" name="attr_importexport"></textarea>
@@ -10513,6 +10513,7 @@ const ATTRIBUTE_KEYS = [
   "mod_spdfly",
   "spdfly_abs",
   "mod_character_ps_type",
+  "mod_character_ps_type_name",
   "mod_restrained_punch",
   "mod_restrained_punch_unit",
   "mod_punch",
@@ -13476,6 +13477,20 @@ on("clicked:migrate", async (e) => {
   console.log("clicked:migrate", e);
   await migrateAttributes();
 });
+
+// $20("button.test").on("mouseenter", (e) => {
+//   console.log(e);
+// });
+
+// on("clicked:test", async (e) => {
+//   console.log("test");
+//   const acid = getActiveCharacterId();
+//   const attrs = findObjs({
+//     _type: "attribute",
+//     _characterid: acid,
+//   });
+//   console.log(acid, attrs);
+// });
 
   /* endinject */
 

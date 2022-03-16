@@ -1391,6 +1391,7 @@ const ATTRIBUTE_KEYS = [
   "mod_spdfly",
   "spdfly_abs",
   "mod_character_ps_type",
+  "mod_character_ps_type_name",
   "mod_restrained_punch",
   "mod_restrained_punch_unit",
   "mod_punch",
