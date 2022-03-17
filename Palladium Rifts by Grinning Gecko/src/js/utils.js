@@ -299,7 +299,7 @@ async function palladiumAddToTurnTracker(initKey, attacksKey) {
   ]);
   const initString = init > 0 ? `+${init}` : `${init}`;
   const roll = await startRoll(
-    `&{template:initiative} {{title=@{selected|character_name} rolls initiative!}} {{diceroll=[[1d20]]}} {{modifier=${initString}}}`
+    `@{opt_whisper}&{template:initiative} {{title=@{selected|character_name} rolls initiative!}} {{diceroll=[[1d20]]}} {{modifier=${initString}}}`
   );
   console.log(roll);
   const computed = roll.results.diceroll.result + init;
