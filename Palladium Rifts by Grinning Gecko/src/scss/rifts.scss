@@ -1074,6 +1074,34 @@ img.logo {
   background-color: #dcdcdc;
 }
 
+.sheet-rolltemplate-darkmode {
+  color: var(--dark-secondarytext);
+
+  .sheet-container {
+    .sheet-content {
+      background-color: #343434;
+
+      :nth-child(4n + 3),
+      :nth-child(4n) {
+        background-color: #444;
+      }
+    }
+
+    .inlinerollresult,
+    .sheet-spent {
+      background-color: var(--dark-primary);
+      border-color: var(--dark-primary);
+      color: var(--dark-primarytext);
+    }
+  }
+  .inlinerollresult,
+  .sheet-spent {
+    background-color: var(--dark-primary);
+    border-color: var(--dark-primary);
+    color: var(--dark-primarytext);
+  }
+}
+
 body.sheet-darkmode {
   color: var(--dark-secondarytext);
 

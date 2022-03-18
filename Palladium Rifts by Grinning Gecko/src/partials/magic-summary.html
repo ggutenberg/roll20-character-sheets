@@ -14,7 +14,7 @@
     <input type="text" value="0" name="attr_damage" readonly />
     <button
       type="roll"
-      value="@{character_name} @{name} [[@{damage}]] @{damage_unit}"
+      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with via @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
       name="roll_spell_damage"
     ></button>
     <input type="hidden" value="0" name="attr_dc" />
