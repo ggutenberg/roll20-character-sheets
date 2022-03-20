@@ -308,7 +308,7 @@ async function palladiumAddToTurnTracker(initKey, attacksKey) {
     diceroll: computed,
   });
   const addToTracker = await startRoll(
-    `Setting @{selected|character_name}'s initiative to [[[[${computed}]] &{tracker}]] in the Turn Tracker.`
+    `@{opt_whisper}&{template:custom} {{title=@{selected|character_name} added to Turn Tracker}} {{Initiative=[[[[${computed}]] &{tracker}]]}}`
   );
   finishRoll(addToTracker.rollId);
   // https://app.roll20.net/forum/post/6817409/multiple-initiative-values-for-a-single-character/?pageforid=6817748#post-6817748

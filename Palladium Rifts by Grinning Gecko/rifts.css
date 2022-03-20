@@ -974,11 +974,13 @@ img.logo {
   border-color: var(--dark-primary);
   color: var(--dark-primarytext);
 }
-.sheet-rolltemplate-darkmode .inlinerollresult,
-.sheet-rolltemplate-darkmode .sheet-spent {
-  background-color: var(--dark-primary);
-  border-color: var(--dark-primary);
-  color: var(--dark-primarytext);
+.sheet-rolltemplate-darkmode .sheet-container .inlinerollresult.fullcrit,
+.sheet-rolltemplate-darkmode .sheet-container .sheet-spent.fullcrit {
+  border: 2px solid #3fb315;
+}
+.sheet-rolltemplate-darkmode .sheet-container .inlinerollresult.fullfail,
+.sheet-rolltemplate-darkmode .sheet-container .sheet-spent.fullfail {
+  border: 2px solid #b31515;
 }
 
 body.sheet-darkmode {
