@@ -259,6 +259,17 @@ a {
   padding-left: 0.5rem;
   overflow-y: auto;
 }
+.charsheet main#megaverse .readonly-light {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #eee;
+  margin: 0.1rem 0.2rem;
+  border-radius: 0.1rem;
+  font-weight: normal;
+  padding-left: 0.5rem;
+  overflow-y: auto;
+}
 .charsheet main#megaverse textarea[readonly] {
   display: flex;
   align-items: center;
@@ -703,6 +714,15 @@ a {
 .charsheet main#megaverse .profile-builder .profiles .bonus-type-container.attributes > label input[type=text] {
   width: auto;
 }
+.charsheet main#megaverse .profile-builder .profiles .bonus-type-container.movement > label {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.charsheet main#megaverse .profile-builder .profiles .bonus-type-container.movement > label span {
+  justify-content: start;
+  padding-left: 0.1rem;
+}
 .charsheet main#megaverse .profile-builder .profiles .bonus-type-container label {
   grid-template-columns: 1fr 5rem 4rem;
 }
@@ -1076,6 +1096,10 @@ body.sheet-darkmode .charsheet main#megaverse .abilities-list span[name]:not(.no
 body.sheet-darkmode .charsheet main#megaverse .readonly {
   background-color: #000;
   border-color: #333;
+}
+body.sheet-darkmode .charsheet main#megaverse .readonly-light {
+  background-color: #444;
+  border-color: #555;
 }
 body.sheet-darkmode .charsheet main#megaverse .heading {
   background-color: #333;

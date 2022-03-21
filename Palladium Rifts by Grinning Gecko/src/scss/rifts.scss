@@ -21,6 +21,9 @@ $picker-color: #3781bd;
   padding-left: 0.5rem;
   overflow-y: auto;
 }
+@mixin readonly-light {
+  @include readonly;
+}
 @mixin section {
   border: 1px solid #ccc;
   padding: 0.5rem;
@@ -244,6 +247,10 @@ a {
 
     .readonly {
       @include readonly;
+    }
+
+    .readonly-light {
+      @include readonly-light;
     }
 
     textarea[readonly] {
@@ -764,6 +771,19 @@ a {
             }
           }
 
+          &.movement {
+            > label {
+              display: grid;
+              gap: 0.5rem;
+              grid-template-columns: 1fr 1fr 1fr;
+
+              span {
+                justify-content: start;
+                padding-left: 0.1rem;
+              }
+            }
+          }
+
           label {
             grid-template-columns: 1fr 5rem 4rem;
 
@@ -1225,6 +1245,11 @@ body.sheet-darkmode {
       .readonly {
         background-color: #000;
         border-color: #333;
+      }
+
+      .readonly-light {
+        background-color: #444;
+        border-color: #555;
       }
 
       .heading {
