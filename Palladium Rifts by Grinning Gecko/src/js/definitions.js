@@ -441,6 +441,34 @@ const H2H = {
     { pull: 1, description: "+1 to leap dodge\n" },
     { attacks: 1 },
   ],
+  "hand to hand: drunken style kung fu": [
+    {
+      attacks: 3,
+      roll: 2,
+      knockout: 19,
+      critical: 19,
+      description:
+        "Drunken Style Foot Play\nDrunken Style Controlled Staggering\n+2 to somersault/stagger/roll/backflip\nCritical Strike from behind\n",
+    },
+    {
+      dodge: 2,
+      dodge_auto: 2,
+      pull: 2,
+    },
+    { strike: 1, initiative: 1 },
+    { description: "Faked Alcohol Sickness\n" },
+    { attacks: 1 },
+    { strike: 1 },
+    { disarm: 2, entangle: 2 },
+    { description: "Projectile Vomit\n" },
+    { attacks: 1 },
+    { roll: 2, pull: 1 },
+    { description: "Joint Twisting\n" },
+    { dodge: 1, dodge_auto: 1, strike: 1 },
+    { roll: 2, pull: 1 },
+    { attacks: 1 },
+    { damage: 1, knockout: 17 },
+  ],
   "hand to hand: dragon": [
     {
       attacks: 3,

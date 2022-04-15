@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.6.0] - 2020-04-14
+
+### Added
+
+- Add calculated Movement section to profiles.
+- Add option to whisper rolls to GM.
+- Add WP Paired to ancient and modern.
+- Add Drunken Style Kung Fu and Mystic Drunken Style.
+
+### Changed
+
+- Fix issue where PS Type wasn't showing up in Active Profile.
+- Fix issue where 'Giant Robotic' displays for PS Type when it should be 'Robotic'.
+- Roll template fixes for dark mode.
+- Layout fixes.
+
 ## [1.5.0] - 2022-03-13
 
 ### Added
