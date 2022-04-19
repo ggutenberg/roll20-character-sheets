@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.6.0] - 2020-04-14
+## [1.6.0] - 2020-04-18
 
 ### Added
 
@@ -8,6 +8,8 @@
 - Add option to whisper rolls to GM.
 - Add WP Paired to ancient and modern.
 - Add Drunken Style Kung Fu and Mystic Drunken Style.
+- Add 'actions' to duration/frequency units.
+- Add whitespace to the bottom of the sheet to make it easier to add rows.
 
 ### Changed
 
@@ -15,6 +17,8 @@
 - Fix issue where 'Giant Robotic' displays for PS Type when it should be 'Robotic'.
 - Roll template fixes for dark mode.
 - Layout fixes.
+- Make Modern WP level read-only.
+- Separate dice and unit on ability/magic/psionic damage summary row.
 
 ## [1.5.0] - 2022-03-13
 
