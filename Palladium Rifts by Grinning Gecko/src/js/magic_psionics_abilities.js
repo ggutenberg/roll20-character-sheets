@@ -103,7 +103,6 @@ async function calculateDamage(row) {
     }
     damage += `+${perLevel}`.repeat(a.character_level - 1);
   }
-  damage += ` ${unit}`;
   await setAttrsAsync({ [row]: damage });
 }
 

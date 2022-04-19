@@ -837,7 +837,7 @@ a {
       .abilities-list {
         display: grid;
         gap: 0.5rem;
-        grid-template-columns: 2.5rem minmax(16rem, 1fr) 6rem 8rem 10rem 8rem 4rem 8rem 4rem 4rem;
+        grid-template-columns: 2.5rem minmax(16rem, 1fr) 6rem 8rem 10rem 5rem 4rem 4rem 6rem 4rem 4rem;
       }
     }
 
@@ -846,7 +846,7 @@ a {
       .spells-list {
         display: grid;
         gap: 0.5rem;
-        grid-template-columns: 2.5rem minmax(16rem, 1fr) 5rem 6rem 8rem 8rem 4rem 8rem 4rem 4rem 6rem 4rem;
+        grid-template-columns: 2.5rem minmax(16rem, 1fr) 5rem 6rem 8rem 5rem 4rem 4rem 6rem 4rem 4rem 6rem 4rem;
       }
     }
 
@@ -855,7 +855,7 @@ a {
       .psionics-list {
         display: grid;
         gap: 0.5rem;
-        grid-template-columns: 2.5rem minmax(16rem, 1fr) 6rem 8rem 8rem 4rem 8rem 4rem 4rem 5rem 4rem;
+        grid-template-columns: 2.5rem minmax(16rem, 1fr) 6rem 8rem 5rem 4rem 4rem 6rem 4rem 4rem 5rem 4rem;
       }
     }
 

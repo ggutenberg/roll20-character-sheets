@@ -1542,6 +1542,7 @@
             <h5>Frequency</h5>
             <h5>Damage</h5>
             <h5></h5>
+            <h5></h5>
             <h5 title="Damage Capacity">D.C.</h5>
             <h5>Skill</h5>
             <h5></h5>
@@ -1563,7 +1564,9 @@
     <span name="attr_duration"></span>
     <input type="hidden" value="0" name="attr_frequency" />
     <span name="attr_frequency"></span>
-    <input type="text" value="0" name="attr_damage" readonly />
+    <span name="attr_damage"></span>
+    <input type="hidden" value="0" name="attr_damage" />
+    <span name="attr_damage_unit"></span>
     <button
       type="roll"
       value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
@@ -2386,6 +2389,7 @@
           <h5>Duration</h5>
           <h5>Damage</h5>
           <h5></h5>
+          <h5></h5>
           <h5 title="Damage Capacity">D.C.</h5>
           <h5>Skill</h5>
           <h5></h5>
@@ -2408,10 +2412,12 @@
     <span name="attr_range"></span>
     <input type="hidden" value="0" name="attr_duration" />
     <span name="attr_duration"></span>
-    <input type="text" value="0" name="attr_damage" readonly />
+    <span name="attr_damage"></span>
+    <input type="hidden" value="0" name="attr_damage" />
+    <span name="attr_damage_unit"></span>
     <button
       type="roll"
-      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with via @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
+      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
       name="roll_spell_damage"
     ></button>
     <input type="hidden" value="0" name="attr_dc" />
@@ -3222,6 +3228,7 @@
           <h5>Duration</h5>
           <h5>Damage</h5>
           <h5></h5>
+          <h5></h5>
           <h5 title="Damage Capacity">D.C.</h5>
           <h5>Skill</h5>
           <h5></h5>
@@ -3243,10 +3250,12 @@
     <span name="attr_range"></span>
     <input type="hidden" value="0" name="attr_duration" />
     <span name="attr_duration"></span>
-    <input type="text" value="0" name="attr_damage" readonly />
+    <span name="attr_damage"></span>
+    <input type="hidden" value="0" name="attr_damage" />
+    <span name="attr_damage_unit"></span>
     <button
       type="roll"
-      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with via @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
+      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
       name="roll_psionic_damage"
     ></button>
     <input type="hidden" value="0" name="attr_dc" />
@@ -13548,7 +13557,6 @@ async function calculateDamage(row) {
     }
     damage += `+${perLevel}`.repeat(a.character_level - 1);
   }
-  damage += ` ${unit}`;
   await setAttrsAsync({ [row]: damage });
 }
 

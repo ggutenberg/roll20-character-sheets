@@ -10,10 +10,12 @@
     <span name="attr_range"></span>
     <input type="hidden" value="0" name="attr_duration" />
     <span name="attr_duration"></span>
-    <input type="text" value="0" name="attr_damage" readonly />
+    <span name="attr_damage"></span>
+    <input type="hidden" value="0" name="attr_damage" />
+    <span name="attr_damage_unit"></span>
     <button
       type="roll"
-      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with via @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
+      value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with @{name}}} {{Damage=[[@{damage}]] @{damage_unit}}}"
       name="roll_psionic_damage"
     ></button>
     <input type="hidden" value="0" name="attr_dc" />
