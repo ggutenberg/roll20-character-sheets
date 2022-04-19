@@ -981,6 +981,9 @@ img.logo {
 .sheet-rolltemplate-darkmode {
   color: var(--dark-secondarytext);
 }
+.sheet-rolltemplate-darkmode .sheet-container {
+  color: var(--dark-secondarytext);
+}
 .sheet-rolltemplate-darkmode .sheet-container .sheet-content {
   background-color: #343434;
 }

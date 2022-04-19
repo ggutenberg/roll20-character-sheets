@@ -1098,6 +1098,8 @@ img.logo {
   color: var(--dark-secondarytext);
 
   .sheet-container {
+    color: var(--dark-secondarytext);
+
     .sheet-content {
       background-color: #343434;
 
@@ -1105,6 +1107,10 @@ img.logo {
       :nth-child(4n) {
         background-color: #444;
       }
+
+      // .sheet-key {
+      //   color: var(--dark-secondarytext)
+      // }
     }
 
     .inlinerollresult,
