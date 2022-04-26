@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.0] -
+
+### Added
+
+- Add punch, kick, etc. roll buttons to profiles and active profile.
+
+### Changed
+
+- Fix name in package.json.
+
 ## [1.6.0] - 2020-04-18
 
 ### Added

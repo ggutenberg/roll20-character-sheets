@@ -359,6 +359,9 @@ a {
 .charsheet main#megaverse .twospan2 {
   grid-column: 2/span 2;
 }
+.charsheet main#megaverse .threespan2 {
+  grid-column: 2/span 3;
+}
 .charsheet main#megaverse .movement-container span:not(.not-readonly) {
   display: flex;
   align-items: center;
@@ -698,6 +701,9 @@ a {
 }
 .charsheet main#megaverse .profile-builder .profiles .bonus-ps-container {
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+.charsheet main#megaverse .profile-builder .profiles .bonus-ps-container label {
+  grid-template-columns: 6.5rem 6rem 1fr 4rem;
 }
 .charsheet main#megaverse .profile-builder .profiles .bonus-type-container {
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));

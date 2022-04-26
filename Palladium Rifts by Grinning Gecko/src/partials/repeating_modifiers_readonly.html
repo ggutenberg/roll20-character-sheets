@@ -982,7 +982,7 @@
       ><span>PS Type</span>
       <input type="hidden" name="attr_mod_character_ps_type" />
       <input type="hidden" name="attr_mod_character_ps_type_name" />
-      <span class="twospan2" name="attr_mod_character_ps_type_name"></span>
+      <span class="threespan2" name="attr_mod_character_ps_type_name"></span>
     </label>
     <label
       ><span>Restrained Punch</span>
@@ -990,6 +990,14 @@
       <span name="attr_mod_restrained_punch"></span>
       <input type="hidden" name="attr_mod_restrained_punch_unit" />
       <span name="attr_mod_restrained_punch_unit"></span>
+      <button
+        type="roll"
+        value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with a restrained punch!}} {{Damage=[[@{mod_restrained_punch} + ?{Add damage modifier?|
+          None,0|
+          P.S. Bonus,@{mod_ps_bonus}
+        }]] @{mod_restrained_punch_unit}}}"
+        name="roll_mod_restrained_punch_damage"
+      ></button>
     </label>
 
     <label
@@ -998,6 +1006,14 @@
       <span name="attr_mod_punch"></span>
       <input type="hidden" name="attr_mod_punch_unit" />
       <span name="attr_mod_punch_unit"></span>
+      <button
+        type="roll"
+        value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with a punch!}} {{Damage=[[@{mod_punch} + ?{Add damage modifier?|
+          None,0|
+          P.S. Bonus,@{mod_ps_bonus}
+        }]] @{mod_punch_unit}}}"
+        name="roll_mod_punch_damage"
+      ></button>
     </label>
 
     <label
@@ -1006,6 +1022,14 @@
       <span name="attr_mod_power_punch"></span>
       <input type="hidden" name="attr_mod_power_punch_unit" />
       <span name="attr_mod_power_punch_unit"></span>
+      <button
+        type="roll"
+        value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with a power punch!}} {{Damage=[[@{mod_power_punch} + ?{Add damage modifier?|
+          None,0|
+          P.S. Bonus,@{mod_ps_bonus}
+        }]] @{mod_power_punch_unit}}}"
+        name="roll_mod_power_punch_damage"
+      ></button>
     </label>
 
     <label
@@ -1014,6 +1038,14 @@
       <span name="attr_mod_kick"></span>
       <input type="hidden" name="attr_mod_kick_unit" />
       <span name="attr_mod_kick_unit"></span>
+      <button
+        type="roll"
+        value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with a kick!}} {{Damage=[[@{mod_kick} + ?{Add damage modifier?|
+          None,0|
+          P.S. Bonus,@{mod_ps_bonus}
+        }]] @{mod_kick_unit}}}"
+        name="roll_mod_kick_damage"
+      ></button>
     </label>
 
     <label
@@ -1022,6 +1054,14 @@
       <span name="attr_mod_leap_kick"></span>
       <input type="hidden" name="attr_mod_leap_kick_unit" />
       <span name="attr_mod_leap_kick_unit"></span>
+      <button
+        type="roll"
+        value="@{opt_whisper}&{template:custom} {{title=@{character_name} connects with a leap kick!}} {{Damage=[[@{mod_leap_kick} + ?{Add damage modifier?|
+          None,0|
+          P.S. Bonus,@{mod_ps_bonus}
+        }]] @{mod_leap_kick_unit}}}"
+        name="roll_mod_leap_kick_damage"
+      ></button>
     </label>
 
     <label
