@@ -1479,6 +1479,7 @@ const COMBAT_KEYS = [
   "damage_paired",
   "damage_mainhand",
   "damage_offhand",
+  "damage_add_punch",
   "dodge_flight",
   "dodge_auto",
   "dodge_teleport",

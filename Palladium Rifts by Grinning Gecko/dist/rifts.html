@@ -1240,6 +1240,10 @@
       ><span>Damage: Off Hand</span>
       <input type="text" value="0" name="attr_damage_offhand" />
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch"
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern <span>&#x1F4A3;</span></h3>
@@ -2157,6 +2161,10 @@
       ><span>Damage: Off Hand</span>
       <input type="text" value="0" name="attr_damage_offhand" />
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch"
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern <span>&#x1F4A3;</span></h3>
@@ -2994,6 +3002,10 @@
       ><span>Damage: Off Hand</span>
       <input type="text" value="0" name="attr_damage_offhand" />
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch"
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern <span>&#x1F4A3;</span></h3>
@@ -3832,6 +3844,10 @@
       ><span>Damage: Off Hand</span>
       <input type="text" value="0" name="attr_damage_offhand" />
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch"
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern <span>&#x1F4A3;</span></h3>
@@ -4548,6 +4564,10 @@
       ><span>Damage: Off Hand</span>
       <input type="text" value="0" name="attr_damage_offhand" />
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch"
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern <span>&#x1F4A3;</span></h3>
@@ -6721,6 +6741,10 @@
         name="roll_bonus_damage_offhand"
       ></button>
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch" disabled
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern/Range <span>&#x1F4A3;</span></h3>
@@ -8004,6 +8028,10 @@
         name="roll_bonus_damage_offhand"
       ></button>
     </label>
+    <label
+      ><span>Add to Punch damage</span
+      ><input type="checkbox" value="0" name="attr_damage_add_punch" disabled
+    /></label>
   </div>
   <div class="combat-offense-range bonus-type-container">
     <h3><span>&#x1F52B;</span> Modern/Range <span>&#x1F4A3;</span></h3>
@@ -9368,6 +9396,25 @@
     <label
       ><input type="checkbox" name=attr_outputarmorwarnings" value="1" /> Show
       Armor warnings when damage is taken on last layer</label
+    >
+    <hr />
+    <label
+      ><input type="radio" name="attr_opt_snps" value="rue" /> Use Rifts:
+      Ultimate Edition rules for Supernatural P.S. and melee weapons. Allow
+      specific weapons (modifiers) to be additive.</label
+    >
+    <p>
+      In Rifts: Ultimate Edition it states that a creature with Supernatural
+      P.S. inflicts either its punch damage <b>or</b> the weapon damage,
+      whichever is higher.
+    </p>
+    <label
+      ><input type="radio" name="attr_opt_snps" value="add" /> Add Supernatural
+      punch damage to all melee attacks.</label
+    >
+    <label
+      ><input type="radio" name="attr_opt_snps" value="prompt" /> Prompt for
+      additional damage on melee attacks.</label
     >
     <hr />
     <label
@@ -11043,6 +11090,7 @@ const COMBAT_KEYS = [
   "damage_paired",
   "damage_mainhand",
   "damage_offhand",
+  "damage_add_punch",
   "dodge_flight",
   "dodge_auto",
   "dodge_teleport",
