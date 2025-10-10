@@ -206,7 +206,7 @@
 <rolltemplate class="sheet-rolltemplate-castspell">
   <div class="sheet-container sheet-color-{{color}}">
     <span class="character_name">{{character_name}}</span> casts
-    <span class="name">{{name}}</span> for
+    <span class="name">{{name}}</span>{{#duration}}, lasting <span class="duration">{{duration}}</span>,{{/duration}} for
     <span class="spent">{{spent}}</span> PPE, leaving them
     <span class="remaining">{{remaining}}</span> PPE!
   </div>
@@ -215,7 +215,7 @@
 <rolltemplate class="sheet-rolltemplate-usepsionic">
   <div class="sheet-container sheet-color-{{color}}">
     <span class="character_name">{{character_name}}</span> uses
-    <span class="name">{{name}}</span> for
+    <span class="name">{{name}}</span>{{#duration}}, lasting <span class="duration">{{duration}}</span>,{{/duration}} for
     <span class="spent">{{spent}}</span> ISP, leaving them
     <span class="remaining">{{remaining}}</span> ISP!
   </div>

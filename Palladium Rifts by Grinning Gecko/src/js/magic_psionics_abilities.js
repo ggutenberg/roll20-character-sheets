@@ -6,18 +6,20 @@ on("clicked:repeating_magic:usespell", async (e) => {
     "repeating_magic_name",
     "character_name",
     "outputusage",
+    "repeating_magic_duration",
   ]);
   console.log(a);
   const newppe = a.currentppe - a.repeating_magic_ppecost;
   await setAttrsAsync({ currentppe: newppe });
   const outputUsage = Boolean(Number(a.outputusage));
   if (outputUsage) {
+    const durationField = a["repeating_magic_duration"].startsWith("0 ") ? "" : ` {{duration=${a["repeating_magic_duration"]}}}`;
     const chat = await startRoll(
       `@{opt_whisper}&{template:castspell} {{character_name=${
         a["character_name"]
       }}} {{spent=${a["repeating_magic_ppecost"]}}} {{name=${
         a[`repeating_magic_name`]
-      }}} {{remaining=${newppe}}}`
+      }}} {{remaining=${newppe}}}${durationField}`
     );
     finishRoll(chat.rollId);
   }
@@ -36,18 +38,20 @@ on("clicked:repeating_psionics:usepsionic", async (e) => {
     "currentisp",
     "character_name",
     "outputusage",
+    "repeating_psionics_duration",
   ]);
   console.log(a);
   const newisp = a.currentisp - a.repeating_psionics_ispcost;
   await setAttrsAsync({ currentisp: newisp });
   const outputUsage = Boolean(Number(a.outputusage));
   if (outputUsage) {
+    const durationField = a["repeating_psionics_duration"].startsWith("0 ") ? "" : ` {{duration=${a["repeating_psionics_duration"]}}}`;
     const chat = await startRoll(
       `@{opt_whisper}&{template:usepsionic} {{character_name=${
         a["character_name"]
       }}} {{spent=${a["repeating_psionics_ispcost"]}}} {{name=${
         a[`repeating_psionics_name`]
-      }}} {{remaining=${newisp}}}`
+      }}} {{remaining=${newisp}}}${durationField}`
     );
     finishRoll(chat.rollId);
   }

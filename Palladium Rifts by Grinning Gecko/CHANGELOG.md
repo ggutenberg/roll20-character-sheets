@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.9.0] - ???
+
+### Added
+
+- Add duration to magic and psionics roll templates if greater than 0.
+
 ## [1.8.6] - 2025-09-24
 
 ### Added
