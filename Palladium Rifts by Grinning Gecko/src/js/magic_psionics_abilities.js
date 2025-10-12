@@ -13,7 +13,8 @@ on("clicked:repeating_magic:usespell", async (e) => {
   await setAttrsAsync({ currentppe: newppe });
   const outputUsage = Boolean(Number(a.outputusage));
   if (outputUsage) {
-    const durationField = a["repeating_magic_duration"].startsWith("0 ") ? "" : ` {{duration=${a["repeating_magic_duration"]}}}`;
+    const durationString = "" + a["repeating_magic_duration"];
+    const durationField = durationString.startsWith("0") || durationString === "" ? "" : ` {{duration=${durationString}}}`;
     const chat = await startRoll(
       `@{opt_whisper}&{template:castspell} {{character_name=${
         a["character_name"]
@@ -45,7 +46,8 @@ on("clicked:repeating_psionics:usepsionic", async (e) => {
   await setAttrsAsync({ currentisp: newisp });
   const outputUsage = Boolean(Number(a.outputusage));
   if (outputUsage) {
-    const durationField = a["repeating_psionics_duration"].startsWith("0 ") ? "" : ` {{duration=${a["repeating_psionics_duration"]}}}`;
+    const durationString = "" + a["repeating_psionics_duration"];
+    const durationField = durationString.startsWith("0") || durationString === "" ? "" : ` {{duration=${durationString}}}`;
     const chat = await startRoll(
       `@{opt_whisper}&{template:usepsionic} {{character_name=${
         a["character_name"]
